@@ -1,0 +1,17 @@
+<tr fxLayout="row" *ngIf="tags?.length && email?.tags" class="primary">
+  <mat-menu #tagMenu="matMenu">
+    Tags
+     <div mat-menu-item *ngFor="let tag of tags">
+      <tr>
+        <mat-checkbox [checked]="email.tags.indexOf(tag) > -1" labelPosition="after" (click)="$event.stopPropagation();">{{tag | uppercase}}</mat-checkbox>
+      </tr>
+    </div>
+  </mat-menu>
+  <button mat-icon-button [matMenuTriggerFor]="tagMenu">
+    <mat-icon class="accent">label</mat-icon>
+  </button>
+  <button mat-icon-button (click)="onDeleteButtonClicked.emit()">
+    <mat-icon class="accent">delete</mat-icon>
+  </button>
+</tr>
+<mat-divider></mat-divider>

@@ -36,7 +36,7 @@ export class EmailService {
           res.messages.map(m => emails.push({
             ...m, 
             isRead: false,
-            tags: m.tags.push('inbox')}));
+            tags: m.tags.concat('inbox')}));
           return emails;
         }
         return null; 

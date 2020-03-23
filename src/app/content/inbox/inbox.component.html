@@ -1,4 +1,4 @@
-<table *ngIf="emails?.length" mat-table [dataSource]="emails" fxFlex class="inbox-container">
+<table *ngIf="emails?.length" mat-table [dataSource]="emails" class="inbox-container">
   <ng-container matColumnDef="sender">
     <td mat-cell *matCellDef="let element">{{element.sender}}</td>
   </ng-container>

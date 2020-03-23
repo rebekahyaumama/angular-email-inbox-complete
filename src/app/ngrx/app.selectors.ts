@@ -14,3 +14,7 @@ export const getEmail = createSelector(
     return emails.find(e => e.id === props.id);
   }
 );
+export const getTags = createSelector(
+  getAppState,
+  (state) => state.tags,
+);

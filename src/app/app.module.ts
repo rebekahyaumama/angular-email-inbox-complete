@@ -24,8 +24,14 @@ import { MenuComponent } from './content/menu/menu.component';
 import { MatTableModule } from '@angular/material/table';
 import { InboxComponent } from './content/inbox/inbox.component';
 import { EmailComponent } from './content/email/email.component';
-import { EmailDetailsComponent } from './content/email/detail.component';
-
+import { EmailDetailsComponent } from './content/email/detail/detail.component';
+import { ToolbarComponent } from './content/email/toolbar/toolbar.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSelectModule } from '@angular/material/select'; 
+import { storageMetaReducer } from './ngrx/storage.metaReducer';
+import { MatCardModule } from '@angular/material/card';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,12 +41,15 @@ import { EmailDetailsComponent } from './content/email/detail.component';
     InboxComponent,
     EmailComponent,
     EmailDetailsComponent,
+    ToolbarComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    StoreModule.forRoot({}),
+    StoreModule.forRoot({}, {
+      metaReducers: [storageMetaReducer]
+    }),
     StoreModule.forFeature('appState', appReducer),
     EffectsModule.forRoot([AppEffects]),
     StoreDevtoolsModule.instrument({
@@ -50,10 +59,15 @@ import { EmailDetailsComponent } from './content/email/detail.component';
     HttpClientModule,
     MatButtonModule,
     MatSidenavModule,
+    MatDialogModule,
+    MatCardModule,
+    MatSelectModule,
     MatIconModule,
     MatListModule,
     MatToolbarModule,
+    MatMenuModule,
     FlexLayoutModule,
+    MatCheckboxModule,
     MatTableModule,
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
 
