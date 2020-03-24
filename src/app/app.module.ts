@@ -13,6 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { appReducer } from './ngrx/app.reducer';
 import { AppEffects } from './ngrx/app.effects';
 import { EffectsModule } from '@ngrx/effects';
@@ -60,12 +61,14 @@ import { MatCardModule } from '@angular/material/card';
     MatButtonModule,
     MatSidenavModule,
     MatDialogModule,
+    ReactiveFormsModule,
     MatCardModule,
     MatSelectModule,
     MatIconModule,
     MatListModule,
     MatToolbarModule,
     MatMenuModule,
+    FormsModule,
     FlexLayoutModule,
     MatCheckboxModule,
     MatTableModule,

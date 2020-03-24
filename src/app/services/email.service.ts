@@ -15,28 +15,31 @@ export interface IEmailsJsonResponse {
   messages: IEmailResponse[];
 }
 export interface IEmail {
-  id: number;
+  id: string;
   subject: string;
   sender: string;
   body: string;
   tags: string[];
   date: Date;
   isRead: boolean;
+  deleted: boolean;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmailService {
-  public getEmailsJSON(): Observable<IEmail[]> {
+  public getEmailsJSON(): Observable<Record<string,IEmail>> {
     return this.http.get<IEmailsJsonResponse>("./assets/emails.json").pipe(
       map(res =>  {
         if (res && res.messages) {
-          let emails = [];
-          res.messages.map(m => emails.push({
+          let emails = {};
+          res.messages.map(m => emails[m.id] = {
             ...m, 
             isRead: false,
-            tags: m.tags.concat('inbox')}));
+            tags: m.tags.concat('inbox'),
+            deleted: false,
+          });
           return emails;
         }
         return null; 

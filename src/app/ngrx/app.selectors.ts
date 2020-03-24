@@ -10,8 +10,8 @@ export const getInbox = createSelector(
 );
 export const getEmail = createSelector(
   getInbox,
-  (emails: IEmail[], props) => {
-    return emails.find(e => e.id === props.id);
+  (emails: Record<string, IEmail>, props) => {
+    return emails[props.id];
   }
 );
 export const getTags = createSelector(

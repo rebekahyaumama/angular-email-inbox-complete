@@ -1,14 +1,13 @@
 <div class="email-container"fxFlex fxLayout="column" *ngIf="email">
   <div class="email-container__header" fxFlex fxLayout="column">
-    <div class="mat-display-2 details-heading"><span>{{email.subject}}</span></div>
+    <div class="mat-display-1 details-heading"><span>{{email.subject}}</span></div>
     <div class="sender-details" fxFlex fxLayout="row center">
       <div>
         <mat-icon mat-card-avatar [inline]="true" class="contact-image">account_circle</mat-icon>
       </div>
       <div class="mat-title sender"><{{email.sender}}></div></div>
   </div>
-  <div fxFlex class="email-contents">
-    {{email.body}}
+  <div fxFlex class="email-contents" [innerHTML]="email.body">
   </div>
 </div>
 <!-- <mat-card>

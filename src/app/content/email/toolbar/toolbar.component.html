@@ -1,9 +1,12 @@
 <tr fxLayout="row" *ngIf="tags?.length && email?.tags" class="primary">
   <mat-menu #tagMenu="matMenu">
     Tags
-     <div mat-menu-item *ngFor="let tag of tags">
+     <div *ngFor="let tag of tags">
       <tr>
-        <mat-checkbox [checked]="email.tags.indexOf(tag) > -1" labelPosition="after" (click)="$event.stopPropagation();">{{tag | uppercase}}</mat-checkbox>
+        <mat-checkbox 
+        labelPosition="after" 
+        [id]="email.id"
+        (change)="onTagSelectionsChanged.emit(tag, tagsForm.controls[tag].value, email.id,$event)">{{tag | uppercase}}</mat-checkbox>
       </tr>
     </div>
   </mat-menu>

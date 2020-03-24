@@ -9,13 +9,19 @@ import { IEmail } from 'src/app/services/email.service';
   styleUrls: ['./inbox.component.scss']
 })
 export class InboxComponent implements OnInit {
-  public emails = [];
+  public emails:IEmail[] = [];
   
   constructor(
     private store: Store<any>,
     private router: Router,
   ) {
-    store.pipe(select(fromRoot.getInbox)).subscribe(inbox => this.emails = inbox);
+    store.pipe(select(fromRoot.getInbox)).subscribe(inbox => {
+      let emailArr= [];
+      for(let item in inbox) {
+        emailArr.push(inbox[item]);
+      }
+      this.emails = emailArr;
+    });
    }
   displayedColumns = ["subject", "sender", "date"];
   ngOnInit(): void {

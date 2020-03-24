@@ -4,14 +4,16 @@ import { map } from 'rxjs/operators';
 import * as fromRoot from '../../ngrx/app.selectors';
 import { AppState } from 'src/app/ngrx/app.reducer';
 import { Store, select } from '@ngrx/store';
-import { RemoveEmailFromStateAction } from 'src/app/ngrx/app.actions';
+import { RemoveEmailFromStateAction, TagsSelectionChangedAction } from 'src/app/ngrx/app.actions';
+
+import { MatCheckboxChange } from '@angular/material/checkbox';
 @Component({
   selector: 'app-email',
   templateUrl: './email.component.html',
   styleUrls: ['./email.component.scss']
 })
 export class EmailComponent implements OnInit {
-  public id: number;
+  public id: string;
   public email$;
   public tags$ = this.store.pipe(select(fromRoot.getTags));
   constructor(
@@ -36,6 +38,11 @@ export class EmailComponent implements OnInit {
       this.store.dispatch(RemoveEmailFromStateAction({id: this.id}));
       this.router.navigate(['/inbox']);
     }
+  }
+
+  onTagsChanged(tag: string, val: boolean, id: string, event: MatCheckboxChange) {
+    console.log(event);
+    this.store.dispatch(TagsSelectionChangedAction({ tag: tag, id: id, checked: val }));
   }
 
 }
