@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { AppState } from './ngrx/app.reducer';
-import { FetchEmailsAction } from './ngrx/app.actions';;
+import { FetchEmailsAction } from './ngrx/app.actions';import { getTags } from './ngrx/app.selectors';
+;
 
 @Component({
   selector: 'app-root',
@@ -10,6 +11,7 @@ import { FetchEmailsAction } from './ngrx/app.actions';;
 })
 export class AppComponent implements OnInit {
   title = 'angular-email-inbox';
+  public tags$ = this.store.pipe(select(getTags));
   ngOnInit() {
     this.store.dispatch(FetchEmailsAction());
   }

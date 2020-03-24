@@ -29,18 +29,24 @@ const _appReducer = createReducer(
       },
     };
   }),
-  // on(fromRoot.TagsSelectionChangedAction, (state, action) => {
-  //   let tags = state.inbox.filter(e=> e.id.toString() === action.id)[0].tags;
-  //   if (action.checked){
-  //     email.tags = email.tags.concat(action.tag);
-  //   } else {
-  //     email.tags = email.tags.filter(tag => tag !== action.tag)  
-  //   }
-  //   return {
-  //      ...state,
-  //     inbox: [...state.inbox, email]
-  //   };  
-  // }),
+  on(fromRoot.TagsSelectionChangedAction, (state: AppState, action) => {
+    return {
+       ...state,
+      inbox: {
+        ...state.inbox,
+        [action.id]: {
+          ...state.inbox[action.id],
+          tags: action.checked ? state.inbox[action.id].tags.concat(action.tag) : state.inbox[action.id].tags.filter(tag => tag !== action.tag),
+        }
+      }
+    };  
+  }),
+  on(fromRoot.AddNewTagToStateAction, (state: AppState, action) => {
+    return {
+      ...state,
+      tags: state.tags.concat(action.tag),
+    };
+  })
 );
 
 export function appReducer(state: AppState = initialState, action: Action): AppState {

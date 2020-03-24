@@ -33,6 +33,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select'; 
 import { storageMetaReducer } from './ngrx/storage.metaReducer';
 import { MatCardModule } from '@angular/material/card';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatChipsModule } from '@angular/material/chips';
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,8 +65,11 @@ import { MatCardModule } from '@angular/material/card';
     MatSidenavModule,
     MatDialogModule,
     ReactiveFormsModule,
+    MatChipsModule,
     MatCardModule,
     MatSelectModule,
+    MatInputModule,
+    MatFormFieldModule,
     MatIconModule,
     MatListModule,
     MatToolbarModule,

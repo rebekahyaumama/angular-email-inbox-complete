@@ -7,6 +7,7 @@ export enum ActionTypes {
   FetchEmailsFailure = '[app ERROR] Fetch Emails Failure',
   RemoveEmailFromState = '[app] Remove Email from State',
   TagsSelectionChanged = '[app] Tags Changed',
+  AddNewTagToState = '[app] New Tag Added to State',
 };
 
 export const FetchEmailsAction = createAction(ActionTypes.FetchEmails);
@@ -14,3 +15,4 @@ export const FetchEmailsSuccessAction = createAction(ActionTypes.FetchEmailsSucc
 export const FetchEmailsFailureAction = createAction(ActionTypes.FetchEmailsFailure);
 export const RemoveEmailFromStateAction = createAction(ActionTypes.RemoveEmailFromState, props<{ id: string }>());
 export const TagsSelectionChangedAction = createAction(ActionTypes.TagsSelectionChanged, props<{ tag: string, id: string, checked: boolean }>())
+export const AddNewTagToStateAction = createAction(ActionTypes.AddNewTagToState, props<{tag: string}>());

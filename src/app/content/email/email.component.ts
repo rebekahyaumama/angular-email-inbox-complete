@@ -12,7 +12,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
   templateUrl: './email.component.html',
   styleUrls: ['./email.component.scss']
 })
-export class EmailComponent implements OnInit {
+export class EmailComponent {
   public id: string;
   public email$;
   public tags$ = this.store.pipe(select(fromRoot.getTags));
@@ -24,25 +24,19 @@ export class EmailComponent implements OnInit {
       this.id = row.id;
       this.email$ = this.store.pipe(select(fromRoot.getEmail, { id: row.id }));
     });
-   }
-
-  ngOnInit(): void {
-    if(this.id) {
-      
-    }
   }
 
   onDeleteEmail(event: Event) {
-    /**Todo: move this into a mat-dialog */ 
+    /**Todo: move this into a mat-dialog */
     if (confirm('Are you sure you want to delete this email?')) {
-      this.store.dispatch(RemoveEmailFromStateAction({id: this.id}));
+      this.store.dispatch(RemoveEmailFromStateAction({ id: this.id }));
       this.router.navigate(['/inbox']);
     }
   }
 
-  onTagsChanged(tag: string, val: boolean, id: string, event: MatCheckboxChange) {
-    console.log(event);
-    this.store.dispatch(TagsSelectionChangedAction({ tag: tag, id: id, checked: val }));
+  onTagsChanged(event: MatCheckboxChange) {
+    const source = event.source;
+    this.store.dispatch(TagsSelectionChangedAction({ tag: source.ariaLabel, id: source.name, checked: event.checked }));
   }
 
 }

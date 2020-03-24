@@ -1,7 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { IEmail } from 'src/app/services/email.service';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/ngrx/app.reducer';
+import { AddNewTagToStateAction } from 'src/app/ngrx/app.actions';
 
 @Component({
   selector: 'app-toolbar',
@@ -24,17 +27,22 @@ export class ToolbarComponent implements OnInit, OnChanges {
     return this._tags;
   }
   @Output() public readonly onDeleteButtonClicked = new EventEmitter();
-  @Output() public readonly onTagSelectionsChanged = new EventEmitter<string& boolean& string& MatCheckboxChange>();
+  @Output() public readonly onTagSelectionsChanged = new EventEmitter<MatCheckboxChange>();
   public _tags;
   public tagsForm: FormGroup;
-  constructor(private fb: FormBuilder) {}
-
+  constructor(private fb: FormBuilder, private store: Store<AppState>) {}
+  public tagInput = new FormControl('', [Validators.required, Validators.maxLength(10)]);
   ngOnInit(): void {
   }
   ngOnChanges(changes) {
     if(changes.tags) {
       
     }
+  }
+
+  addTag(tag: string) {
+    this.tagsForm.addControl(tag, new FormControl(true));
+    this.store.dispatch(AddNewTagToStateAction({tag: tag}));
   }
 
 }

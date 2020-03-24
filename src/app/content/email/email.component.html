@@ -2,7 +2,7 @@
 [email]="email$ | async"
 [tags]="tags$ | async"
 (onDeleteButtonClicked)="onDeleteEmail($event)"
-(onTagSelectionsChanged)="onTagsChanged(tag, val, id, $event)"></app-toolbar>
+(onTagSelectionsChanged)="onTagsChanged($event)"></app-toolbar>
 <app-email-details
 [email]="email$ | async"
 ></app-email-details>
