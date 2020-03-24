@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { createEffect, Actions, ofType } from '@ngrx/effects';
 import { EmailService } from '../services/email.service';
-import { ActionTypes, FetchEmailsAction, FetchEmailsSuccessAction, FetchEmailsFailureAction } from './app.actions';
-import { tap, catchError, switchMap, map, concatMap, withLatestFrom  } from 'rxjs/operators';
+import { ActionTypes } from './app.actions';
+import { catchError, switchMap, map } from 'rxjs/operators';
 import { of, EMPTY } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { AppState } from './app.reducer';
