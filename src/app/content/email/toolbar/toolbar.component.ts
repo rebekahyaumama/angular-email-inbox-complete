@@ -5,13 +5,14 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/ngrx/app.reducer';
 import { AddNewTagToStateAction } from 'src/app/ngrx/app.actions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss']
 })
-export class ToolbarComponent implements OnInit, OnChanges {
+export class ToolbarComponent implements OnInit {
   @Input() public email: IEmail;
   @Input() public set tags(tags: string[]) {
     if(tags && tags.length){
@@ -30,14 +31,9 @@ export class ToolbarComponent implements OnInit, OnChanges {
   @Output() public readonly onTagSelectionsChanged = new EventEmitter<MatCheckboxChange>();
   public _tags;
   public tagsForm: FormGroup;
-  constructor(private fb: FormBuilder, private store: Store<AppState>) {}
   public tagInput = new FormControl('', [Validators.required, Validators.maxLength(10)]);
+
   ngOnInit(): void {
-  }
-  ngOnChanges(changes) {
-    if(changes.tags) {
-      
-    }
   }
 
   addTag(tag: string) {
@@ -45,4 +41,11 @@ export class ToolbarComponent implements OnInit, OnChanges {
     this.store.dispatch(AddNewTagToStateAction({tag: tag}));
   }
 
+  onBackClick() {
+    this.router.navigate(['/inbox']);
+  }
+  constructor(
+    private fb: FormBuilder, 
+    private store: Store<AppState>,
+    private router: Router) {}
 }

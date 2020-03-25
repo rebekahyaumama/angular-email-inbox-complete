@@ -1,4 +1,7 @@
 <tr fxLayout="row" *ngIf="tags?.length && email?.tags" class="primary">
+  <button mat-icon-button (click)="onBackClick()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
   <mat-menu #tagMenu="matMenu">
     Tags
      <div *ngFor="let tag of tags; let i=index;" class="tags-checkbox-container" (click) = "$event.stopPropagation()">

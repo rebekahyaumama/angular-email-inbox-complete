@@ -21,7 +21,9 @@ export class InboxComponent implements OnDestroy {
     this.inboxSubscription = this.store.pipe(select(fromRoot.getInbox)).subscribe(inbox => {
       let emailArr= [];
       for(let item in inbox) {
-        emailArr.push(inbox[item]);
+        if(!inbox[item].deleted){
+          emailArr.push(inbox[item]);
+        }
       }
       this.emails = emailArr;
     });
