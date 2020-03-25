@@ -37,7 +37,7 @@ export class EmailService {
           res.messages.map(m => emails[m.id] = {
             ...m, 
             isRead: false,
-            tags: m.tags.concat('inbox'),
+            tags: m.tags.concat('inbox').sort(),
             deleted: false,
           });
           return emails;

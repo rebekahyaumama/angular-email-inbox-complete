@@ -1,7 +1,10 @@
 import { IEmail } from '../services/email.service';
 import * as fromRoot from './app.actions';
 import { createReducer, on, Action } from '@ngrx/store';
-import { state } from '@angular/animations';
+
+export enum STATIC_TAGS {
+  inbox = 'inbox',
+}
 
 export interface AppState {
   inbox: Record<string, IEmail>;
@@ -29,6 +32,18 @@ const _appReducer = createReducer(
       },
     };
   }),
+  on(fromRoot.RestoreEmailToStateAction, (state: AppState, action) => {
+    return {
+      ...state,
+      inbox: {
+        ...state.inbox,
+        [action.id]: {
+          ...state.inbox[action.id],
+          deleted: false,
+        },
+      },
+    };
+  }),
   on(fromRoot.TagsSelectionChangedAction, (state: AppState, action) => {
     return {
        ...state,
@@ -46,6 +61,15 @@ const _appReducer = createReducer(
       ...state,
       tags: state.tags.concat(action.tag),
     };
+  }),
+  on(fromRoot.RemoveTagFromStateAction, (state: AppState, action) => {
+    return {
+      ...state,
+      inbox:{
+        ...state.inbox,
+      },
+      tags: state.tags.filter(tag => tag !== action.tag),
+    }
   })
 );
 

@@ -21,7 +21,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MenuComponent } from './content/menu/menu.component';
 import { MatTableModule } from '@angular/material/table';
 import { InboxComponent } from './content/inbox/inbox.component';
 import { EmailComponent } from './content/email/email.component';
@@ -36,6 +35,8 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatChipsModule } from '@angular/material/chips';
 import {merge, pick} from 'lodash-es';
+import { EmailsListComponent } from './content/inbox/emails-list/emails-list.component';
+import { NgrxRouterStoreModule } from './ngrx/router/ngrx-router.module';
 
 function setSavedState(state: any, localStorageKey: string) {
   localStorage.setItem(localStorageKey, JSON.stringify(state));
@@ -71,12 +72,12 @@ export function storageMetaReducer<S, A extends Action = Action> (reducer: Actio
   declarations: [
     AppComponent,
     SideBarComponent,
-    MenuComponent,
     GlobalHeaderComponent,
     InboxComponent,
     EmailComponent,
     EmailDetailsComponent,
     ToolbarComponent,
+    EmailsListComponent,
   ],
   imports: [
     BrowserModule,
@@ -109,6 +110,7 @@ export function storageMetaReducer<S, A extends Action = Action> (reducer: Actio
     FlexLayoutModule,
     MatCheckboxModule,
     MatTableModule,
+    NgrxRouterStoreModule,
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
 
   ],

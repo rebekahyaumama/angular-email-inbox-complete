@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
 import * as fromRoot from '../../ngrx/app.selectors';
-import { AppState } from 'src/app/ngrx/app.reducer';
+import { AppState, STATIC_TAGS } from 'src/app/ngrx/app.reducer';
 import { Store, select } from '@ngrx/store';
-import { RemoveEmailFromStateAction, TagsSelectionChangedAction } from 'src/app/ngrx/app.actions';
+import { RemoveEmailFromStateAction, TagsSelectionChangedAction, RemoveTagFromStateAction } from 'src/app/ngrx/app.actions';
 
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { getMergedRoute } from 'src/app/ngrx/router/router-state.selectors';
 @Component({
   selector: 'app-email',
   templateUrl: './email.component.html',
@@ -14,29 +15,25 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 })
 export class EmailComponent {
   public id: string;
-  public email$;
+  public email$ = this.store.pipe(select(fromRoot.getEmail));
   public tags$ = this.store.pipe(select(fromRoot.getTags));
+  public route$ = this.store.pipe(select(getMergedRoute));
   constructor(
     private store: Store<AppState>,
-    private route: ActivatedRoute,
-    private router: Router) {
-    this.route.params.subscribe(row => {
-      this.id = row.id;
-      this.email$ = this.store.pipe(select(fromRoot.getEmail, { id: row.id }));
-    });
-  }
-
-  onDeleteEmail(event: Event) {
-    /**Todo: move this into a mat-dialog */
-    if (confirm('Are you sure you want to delete this email?')) {
-      this.store.dispatch(RemoveEmailFromStateAction({ id: this.id }));
-      this.router.navigate(['/inbox']);
-    }
-  }
+    private router: Router) { }
+  
 
   onTagsChanged(event: MatCheckboxChange) {
     const source = event.source;
     this.store.dispatch(TagsSelectionChangedAction({ tag: source.ariaLabel, id: source.name, checked: event.checked }));
+  }
+
+  onTagDeleted(event: {tag: string}) {
+    if(event.tag in STATIC_TAGS){
+      alert('you cannot delete'+ event.tag);
+      return;
+    }
+    this.store.dispatch(RemoveTagFromStateAction({tag: event.tag}));
   }
 
 }

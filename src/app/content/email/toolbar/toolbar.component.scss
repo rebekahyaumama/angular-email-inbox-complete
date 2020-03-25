@@ -2,5 +2,10 @@
   margin: 3px;
 }
 .tags-checkbox-container {
+  padding: 8px;
   margin: 5px 0;
+}
+.mat-menu-content:not(:empty) {
+  padding-left: 8px;
+  padding-right: 8px;
 }

@@ -1,8 +1,9 @@
 <app-toolbar 
 [email]="email$ | async"
 [tags]="tags$ | async"
-(onDeleteButtonClicked)="onDeleteEmail($event)"
-(onTagSelectionsChanged)="onTagsChanged($event)"></app-toolbar>
+[routeName]="route$ | async"
+(onTagSelectionsChanged)="onTagsChanged($event)"
+(onTagDeleted)="onTagDeleted($event)"></app-toolbar>
 <app-email-details
 [email]="email$ | async"
 ></app-email-details>

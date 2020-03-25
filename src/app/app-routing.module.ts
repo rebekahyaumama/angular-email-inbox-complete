@@ -10,7 +10,7 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'inbox',
+    path: ':tag',
     component: InboxComponent,
   },
   {

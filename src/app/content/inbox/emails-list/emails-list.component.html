@@ -1,0 +1,23 @@
+<table *ngIf="emails?.length || (tagName === 'deleted' && deletedEmails?.length)" mat-table [dataSource]="tagName === 'deleted' ? deletedEmails : emails" class="inbox-container">
+  <ng-container matColumnDef="selected" sticky>
+    <td mat-cell *matCellDef="let element" class="selected"><mat-checkbox (change)="emailSelected(element, $event)"></mat-checkbox></td>
+  </ng-container>
+  <ng-container matColumnDef="sender">
+    <td mat-cell [routerLink]="['/inbox', element.id]" class="sender" *matCellDef="let element">{{element.sender}}</td>
+  </ng-container>
+  <ng-container matColumnDef="tags">
+    <td mat-cell [routerLink]="['/inbox', element.id]" class="tags-cell" *matCellDef="let element">
+      <mat-chip-list>
+        <mat-chip [ngStyle]="{'background-color': tagName === tag ? 'lightblue' : '' }" *ngFor="let tag of element.tags">{{tag}}</mat-chip>
+      </mat-chip-list>
+  </td>
+  </ng-container>
+  <ng-container matColumnDef="subject">
+    <td mat-cell [routerLink]="['/inbox', element.id]" *matCellDef="let element" class="subject">{{element.subject}}</td>
+  </ng-container>
+  <ng-container matColumnDef="date">
+    <td mat-cell *matCellDef="let element" class="date">{{element.date | date}}</td>
+  </ng-container>
+  <tr mat-row [id]="row.id" *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<h3 *ngIf="!emails?.length && !deletedEmails?.length">No emails in {{tagName}}</h3>

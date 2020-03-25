@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/ngrx/app.reducer';
-import { AddNewTagToStateAction } from 'src/app/ngrx/app.actions';
+import { AddNewTagToStateAction, RemoveEmailFromStateAction, RestoreEmailToStateAction } from 'src/app/ngrx/app.actions';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss']
 })
-export class ToolbarComponent implements OnInit {
+export class ToolbarComponent implements OnInit, OnChanges {
   @Input() public email: IEmail;
   @Input() public set tags(tags: string[]) {
     if(tags && tags.length){
@@ -27,13 +27,18 @@ export class ToolbarComponent implements OnInit {
   public get tags() {
     return this._tags;
   }
-  @Output() public readonly onDeleteButtonClicked = new EventEmitter();
+  @Input() public routeName;
   @Output() public readonly onTagSelectionsChanged = new EventEmitter<MatCheckboxChange>();
+  @Output() public readonly onTagDeleted = new EventEmitter<{tag: string}>();
   public _tags;
   public tagsForm: FormGroup;
   public tagInput = new FormControl('', [Validators.required, Validators.maxLength(10)]);
-
+  public tagEditMode = false;
   ngOnInit(): void {
+  }
+
+  ngOnChanges(changes) {
+    console.log(changes);
   }
 
   addTag(tag: string) {
@@ -43,6 +48,23 @@ export class ToolbarComponent implements OnInit {
 
   onBackClick() {
     this.router.navigate(['/inbox']);
+  }
+
+  tagDeleted(tag: string) {
+    this.onTagDeleted.emit({tag});
+  }
+  onDeleteEmail(){
+    if (confirm('Are you sure you want to delete this email?')) {
+      this.store.dispatch(RemoveEmailFromStateAction({ id: this.email.id }));
+      this.router.navigate(['/inbox']);
+    }
+  }
+   
+  onRestoreEmail() {
+    if (confirm('Are you sure you want to restore this email?')) {
+      this.store.dispatch(RestoreEmailToStateAction({ id: this.email.id }));
+      this.router.navigate(['/inbox']);
+    }
   }
   constructor(
     private fb: FormBuilder, 

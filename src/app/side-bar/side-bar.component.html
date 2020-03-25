@@ -1,8 +1,15 @@
 <div style="width:30%">
   <h3>Tags</h3>
-  <tr *ngFor="let tag of tags">
-    <button mat-icon-button>
+  <tr *ngFor="let tag of tags"><td>
+    <button mat-icon-button [routerLink]="'/'+tag">
       <mat-icon>label</mat-icon> {{tag | uppercase}}
     </button>
+  </td>
+  </tr>
+  <mat-divider></mat-divider>
+  <tr>
+    <td>
+      <button mat-icon-button [routerLink]="'/deleted'"><mat-icon>delete</mat-icon> TRASH</button>
+    </td>
   </tr>
 </div>
